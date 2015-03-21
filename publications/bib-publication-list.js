@@ -60,6 +60,11 @@ var bibtexify = (function($) {
             return itemStr.replace(/undefined/g,
                                    '<span class="undefined">missing<\/span>');
         },
+		type2html: function(entryData, counter){
+			return '<div>'+
+						'<span class="pubi ' + entryData.entryType + '"></span><span>'+bib2html.labelsshort[entryData.entryType]+(counter)+
+				   '</span></div>';
+		},
         // converts the given author data into HTML
         authors2html: function(authorData) {
             var authorsStr = '';
@@ -216,8 +221,22 @@ var bibtexify = (function($) {
             'phdthesis': 'PhD Thesis',
             'proceedings': 'Conference proceeding',
             'techreport': 'Technical report',
-            'unpublished': 'Unpublished'}
-    };
+            'unpublished': 'Unpublished'},
+		labelsshort: {
+            'article': 'j',
+            'book': 'b',
+            'conference': 'c',
+            'inbook': 'h',
+            'incollection': 'h',
+            'inproceedings': 'c',
+            'manual': 'm',
+            'mastersthesis': 't',
+            'misc': 's',
+            'phdthesis': 'p',
+            'proceedings': 'cp',
+            'techreport': 'i',
+            'unpublished': 'u'}
+		};
     // format a phd thesis similarly to masters thesis
     bib2html.phdthesis = bib2html.mastersthesis;
     // conference is the same as inproceedings
@@ -251,15 +270,30 @@ var bibtexify = (function($) {
         var bibentries = [], len = bibtex.data.length;
         var entryTypes = {};
         jQuery.extend(true, bib2html, this.options.bib2html);
+		
+		var counter = {};
+		for (var key in bib2html.labelsshort) {
+			counter[key] = 0;
+		}
+		for (var index = 0; index < len; index++) {
+            var item = bibtex.data[index];
+			counter[item.entryType]++;
+		}
+		
+		var previousyear = 0;
+		
         for (var index = 0; index < len; index++) {
             var item = bibtex.data[index];
             if (!item.year) {
               item.year = this.options.defaultYear || "To Appear";
             }
             var html = bib2html.entry2html(item, this);
-            bibentries.push([item.year, bib2html.labels[item.entryType], html]);
+			var typehtml = bib2html.type2html(item, counter[item.entryType]--);
+            var year = (previousyear == item.year)?"":item.year;
+			bibentries.push([year, typehtml, html]);
             entryTypes[bib2html.labels[item.entryType]] = item.entryType;
             this.updateStats(item);
+			previousyear = item.year;
         }
         jQuery.fn.dataTableExt.oSort['type-sort-asc'] = function(x, y) {
             var item1 = bib2html.importance[entryTypes[x]],
@@ -273,10 +307,14 @@ var bibtexify = (function($) {
         };
         var table = this.$pubTable.dataTable({ 'aaData': bibentries,
                               'aaSorting': this.options.sorting,
-                              'aoColumns': [ { "sTitle": "Year" },
-                                             { "sTitle": "Type", "sType": "type-sort", "asSorting": [ "desc", "asc" ] },
+                              'aoColumns': [ { "sTitle": "Year", "bSortable": false },
+                                             { "sTitle": "Type", "bSortable": false },
                                              { "sTitle": "Publication", "bSortable": false }],
-                              'bPaginate': false
+                              'bPaginate': false,
+							  'bInfo':false,
+							  'bFilter':false,
+							  "bJQueryUI": true,
+							  "sDom": 'lfrtip'
                             });
         if (this.options.visualization) {
             this.addBarChart();
@@ -392,7 +430,7 @@ var bibtexify = (function($) {
     //               the bib2html object. See above, starting around line 40.
     return function(bibsrc, bibElemId, opts) {
         var options = $.extend({}, {'visualization': true,
-                                'sorting': [[0, "desc"], [1, "desc"]]},
+                                'sorting': []},
                                 opts);
         var $pubTable = $("#" + bibElemId).addClass("bibtable");
         if ($("#shutter").size() === 0) {
