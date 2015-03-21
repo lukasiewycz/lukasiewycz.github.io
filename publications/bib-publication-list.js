@@ -62,8 +62,7 @@ var bibtexify = (function($) {
         },
 		type2html: function(entryData, counter){
 			return '<div>'+
-						'<span class="pubi ' + entryData.entryType + '"></span><span>'+bib2html.labelsshort[entryData.entryType]+(counter)+
-				   '</span></div>';
+						'<span class="pubi ' + entryData.entryType + '"></span><br/><span>'+bib2html.labelsshort[entryData.entryType]+(counter)+'</span></div>';
 		},
         // converts the given author data into HTML
         authors2html: function(authorData) {
@@ -429,7 +428,7 @@ var bibtexify = (function($) {
     //   - bib2html: Can be used to override any of the functions or properties of
     //               the bib2html object. See above, starting around line 40.
     return function(bibsrc, bibElemId, opts) {
-        var options = $.extend({}, {'visualization': true,
+        var options = $.extend({}, {'visualization': false,
                                 'sorting': []},
                                 opts);
         var $pubTable = $("#" + bibElemId).addClass("bibtable");
