@@ -186,8 +186,8 @@ var bibtexify = (function($) {
                 entryData.publisher + ", pp. " + entryData.pages + "" +
                 ((entryData.series)?", <em>" + entryData.series + "<\/em>":"") +
                 ((entryData.volume)?", Vol. " + entryData.volume + "":"") +
-                ((entryData.isbn)?", ISBN: " + entryData.isbn + "":"") +
-                ".";
+                ((entryData.doi)? " DOI: <a href=\"http://dx.doi.org/"+entryData.doi+"\">"+entryData.doi+"</a>":"") +
+				((!entryData.doi && entryData.isbn)?" ISBN: " + entryData.isbn + "":"");
         },
         // weights of the different types of entries; used when sorting
         importance: {
