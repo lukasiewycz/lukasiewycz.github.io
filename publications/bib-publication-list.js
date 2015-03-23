@@ -1,3 +1,6 @@
+var bibfileimg = 'https://lukasiewycz.github.io/publications/lib/images/bibtex.png';
+var pdffileimg = 'https://lukasiewycz.github.io/publications/lib/images/pdf.png';
+var linkimg = 'https://lukasiewycz.github.io/publications/lib/images/hyperlink.png';
 
 var bibtexify = (function($) {
     // helper function to "compile" LaTeX special characters to HTML
@@ -78,10 +81,10 @@ var bibtexify = (function($) {
             var itemStr = '';
             if (entryData.url && entryData.url.match(/.*\.pdf/)) {
                 itemStr += ' <a title="PDF-version of this article" href="' +
-                            entryData.url + '"><img src=\"lib/images/pdf.png\" /><\/a> ';
+                            entryData.url + '"><img src=\"'+pdffileimg+'\" /><\/a> ';
             } else if (entryData.url) {
-                itemStr += ' (<a title="This article online" href="' + entryData.url +
-                            '">link<\/a>)';
+                itemStr += ' <a title="This article online" href="' + entryData.url +
+                            '"><img src=\"'+linkimg+'\" /><\/a>';
             }
             return itemStr;
         },
@@ -89,7 +92,7 @@ var bibtexify = (function($) {
         bibtex: function(entryData) {
             var itemStr = '';
             itemStr += ' <a title="This article as BibTeX" href="#" class="biblink">' +
-                        '<img src=\"lib/images/bibtex.png\" /></a><div class="bibinfo hidden">';
+                        '<img src=\"'+bibfileimg+'\" /></a><div class="bibinfo hidden">';
             itemStr += '<a href="#" class="bibclose" title="Close">x</a><pre>';
             itemStr += '@' + entryData.entryType + "{" + entryData.cite + ",\n";
             $.each(entryData, function(key, value) {
