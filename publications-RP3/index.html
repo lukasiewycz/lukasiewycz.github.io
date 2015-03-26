@@ -1,0 +1,27 @@
+<!doctype html>
+</body>
+<head>
+      <meta charset="UTF-8">
+</head>
+</html>
+<html>
+	<head>
+		<title>Martin Lukasiewycz - Publications</title>
+		<link rel="stylesheet" href="../publications/site.css"/>
+		<link rel="stylesheet" href="../publications/bib-publication-list.css"/>
+	</head>
+	<body>
+		<h1>Martin Lukasiewycz - Publications</h1>
+		<table id="pubTable" class="display"></table>
+				<script type="text/javascript" src="../publications/jquery.min.js"></script>
+                <script type="text/javascript" src="../publications/jquery.dataTables.min.js"></script>
+                <script type="text/javascript" src="../publications/BibTex-0.1.2.js"></script>
+                <script type="text/javascript" src="../publications/bib-publication-list.js"></script>
+		<script type="text/javascript">
+		    $(document).ready(function() {
+        	     bibtexify("publications-RP3.bib", "pubTable");
+                     //bibtexify("publications.bib", "pubTable");
+    		});
+		</script>
+	</body>
+</html>
