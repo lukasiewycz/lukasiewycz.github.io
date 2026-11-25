@@ -1,22 +1,26 @@
 <!doctype html>
-<html>
-	<head>
-		<title>Martin Lukasiewycz - Publications</title>
-		<link rel="stylesheet" href="publications/site.css"/>
-		<link rel="stylesheet" href="publications/bib-publication-list.css"/>
-	</head>
-	<body>
-		<h1>Martin Lukasiewycz - Publications</h1>
-		<table id="pubTable" class="display"></table>
-				<script type="text/javascript" src="publications/jquery.min.js"></script>
-                <script type="text/javascript" src="publications/jquery.dataTables.min.js"></script>
-                <script type="text/javascript" src="publications/BibTex-0.1.2.js"></script>
-                <script type="text/javascript" src="publications/bib-publication-list.js"></script>
-		<script type="text/javascript">
-		    $(document).ready(function() {
-        	     bibtexify("publications/publications.bib", "pubTable");
-                     //bibtexify("publications.bib", "pubTable");
-    		});
-		</script>
-	</body>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Martin Lukasiewycz - Publications</title>
+	<link rel="stylesheet" href="publications/site.css">
+	<link rel="stylesheet" href="publications/bib-publication-list.css">
+</head>
+<body>
+	<h1>Martin Lukasiewycz - Publications</h1>
+	<noscript>
+		<p>JavaScript is required to render the interactive list. You can view the raw BibTeX file <a href="publications/publications.bib">here</a>.</p>
+	</noscript>
+	<table id="pubTable" class="display"></table>
+	<script src="publications/jquery.min.js"></script>
+	<script src="publications/jquery.dataTables.min.js"></script>
+	<script src="publications/BibTex-0.1.2.js"></script>
+	<script src="publications/bib-publication-list.js"></script>
+	<script>
+		$(document).ready(function() {
+			bibtexify("publications/publications.bib", "pubTable");
+		});
+	</script>
+</body>
 </html>

@@ -1,6 +1,8 @@
-body  {
-background-color: #FFFFFF;
-width: 800px;
-margin: 10px 40px;
-font-family: Georgia, Serif, Verdana, Geneva, sans-serif;
+body {
+	background-color: #FFFFFF;
+	max-width: 800px;
+	margin: 10px auto;
+	padding: 0 16px;
+	font-family: Georgia, Serif, Verdana, Geneva, sans-serif;
+	box-sizing: border-box;
 }
